@@ -85,15 +85,18 @@ class Point:
     def getParent(self):
         return self.Parent
     def toString(self):
-        return("x = "+str(self.x)+"y = "+str(self.y))
-q = Queue()
-path = Queue()
+        return("x = "+str(self.x)+" y = "+str(self.y))
+q = Queue() #queue untuk melakukan BFS
+path = Queue() #path yang dilalui untuk mencapai exit
+iterasi = 0
 def BFSPath(x,y):
+    global iterasi
     q.add(Point(x,y,None))
     while(q.isEmpty() == False):
+        iterasi += 1
         P = q.remove()
         if(P.y == maxKol-1 and Map[P.x][P.y] == 0):
-            print("Telah Sampai Exit")
+            print("Exit ditemukan di "+'('+str(P.x)+','+str(P.y)+')')
             return P
         if(isFree(P.x+1,P.y)):
             Map[P.x][P.y] = -1
@@ -127,4 +130,5 @@ if __name__ == "__main__":
     while P is not None:
         path.addTofront(P)
         P = P.Parent
+    print(iterasi)#banyaknya loop yang digunakan
     path.Print()
