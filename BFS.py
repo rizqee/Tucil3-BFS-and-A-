@@ -32,6 +32,16 @@ class Queue:
             else:
                 temp = temp.next
         return found
+    def addTofront(self,data):
+        if(self.tail is None):
+            self.head = Node(data)
+            self.tail = self.head
+        elif(self.isMember(data)):
+            return
+        else:
+            temp = self.head
+            self.head = Node(data)
+            self.head.next = temp
     def add(self,data):
         if(self.tail is None):
             self.head = Node(data)
@@ -80,7 +90,6 @@ q = Queue()
 path = Queue()
 def BFSPath(x,y):
     q.add(Point(x,y,None))
-    path.add(Point(x,y,None))
     while(q.isEmpty() == False):
         P = q.remove()
         if(P.y == maxKol-1 and Map[P.x][P.y] == 0):
@@ -90,22 +99,19 @@ def BFSPath(x,y):
             Map[P.x][P.y] = -1
             nextP = Point(P.x+1,P.y,P)
             q.add(nextP)
-            path.add(nextP)
         if(isFree(P.x-1,P.y)):
             Map[P.x][P.y] = -1
             nextP = Point(P.x-1,P.y,P)
             q.add(nextP)
-            path.add(nextP)
         if(isFree(P.x,P.y+1)):
             Map[P.x][P.y] = -1
             nextP = Point(P.x,P.y+1,P)
             q.add(nextP)
-            path.add(nextP)
         if(isFree(P.x,P.y-1)):
             Map[P.x][P.y] = -1
             nextP = Point(P.x,P.y-1,P)
             q.add(nextP)
-            path.add(nextP)
+
     return None
 def isFree(x,y):
     if((x >= 0 and x < maxBrs) and (y>=0 and y < maxKol) and Map[x][y] == 0):
@@ -117,4 +123,8 @@ if __name__ == "__main__":
         if Map[x][0] == 0:
             temp = x
     P = BFSPath(temp,0)
+    temp1 = Queue()
+    while P is not None:
+        path.addTofront(P)
+        P = P.Parent
     path.Print()
