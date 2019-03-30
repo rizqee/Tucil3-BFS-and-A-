@@ -106,33 +106,33 @@ def Manhattan(P1,P2):
     return (math.fabs(P1.x-P2.x)+math.fabs(P1.y-P2.y))
 def AStar(start,exit):
    global iterasi
-   List.append([Manhattan(start,exit),start])
+   List.append([Manhattan(start,exit),start,0])
    while(len(List)!=0):
        iterasi =  iterasi+1
        P = List.pop(0)
-       print(P[0],P[1].toString())
+       print(P[0],P[1].toString(),P[2])
        if(P[1].x  == exit.x and P[1].y == exit.y):
             print("Exit ditemukan di "+'('+str(P[1].x)+','+str(P[1].y)+')')
             return P[1]
        if(isFree(P[1].x+1,P[1].y)):
             Map[P[1].x][P[1].y] = -1
             P1 = Point(P[1].x+1,P[1].y,P[1])
-            nextP = [Manhattan(P1,exit),P1]
+            nextP = [Manhattan(P1,exit)+P[2],P1,P[2]+1]
             List.append(nextP)
        if(isFree(P[1].x-1,P[1].y)):
             Map[P[1].x][P[1].y] = -1
             P1 = Point(P[1].x-1,P[1].y,P[1])
-            nextP = [Manhattan(P1,exit),P1]
+            nextP = [Manhattan(P1,exit)+P[2],P1,P[2]+1]
             List.append(nextP)
        if(isFree(P[1].x,P[1].y+1)):
             Map[P[1].x][P[1].y] = -1
             P1 = Point(P[1].x,P[1].y+1,P[1])
-            nextP = [Manhattan(P1,exit),P1]
+            nextP = [Manhattan(P1,exit)+P[2],P1,P[2]+1]
             List.append(nextP)
        if(isFree(P[1].x,P[1].y-1)):
             Map[P[1].x][P[1].y] = -1
             P1 = Point(P[1].x,P[1].y-1,P[1])
-            nextP = [Manhattan(P1,exit),P1]
+            nextP = [Manhattan(P1,exit)+P[2],P1,P[2]+1]
             List.append(nextP)
        List.sort()
    return None
